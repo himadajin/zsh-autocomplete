@@ -126,6 +126,10 @@ EOF
 
     expansion="${(b)$( eval print -r -- $word )}" 2> /dev/null ||
         return 1
+    if [[ $word == \~* ]]; then
+        word="${(b)$(eval print -r -- ${(M)word#*/})}${(b)word#*/}" 2> /dev/null ||
+            return 1
+    fi
     [[ $expansion == $word ]] &&
         return 1
 
